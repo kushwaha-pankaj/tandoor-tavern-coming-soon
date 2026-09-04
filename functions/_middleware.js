@@ -1,12 +1,8 @@
 /**
- * Canonical host: tandoortavern.co.uk
- * Redirect www → apex with 301.
+ * Host redirect intentionally disabled until apex domain
+ * tandoortavern.co.uk is Active in Cloudflare Pages.
+ * www currently serves the site directly.
  */
 export async function onRequest(context) {
-  const url = new URL(context.request.url);
-  if (url.hostname === "www.tandoortavern.co.uk") {
-    url.hostname = "tandoortavern.co.uk";
-    return Response.redirect(url.toString(), 301);
-  }
   return context.next();
 }
