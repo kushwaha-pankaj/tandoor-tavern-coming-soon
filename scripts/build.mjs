@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Static-site build gate for Cloudflare Pages.
- * Confirms required assets exist and are unchanged; output dir is public/.
+ * Confirms required assets exist; output dir is public/.
  */
 import { createHash } from "node:crypto";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, statSync } from "node:fs";
@@ -15,8 +15,8 @@ const required = [
   "index.html",
   "css/styles.css",
   "js/main.js",
-  "assets/tandoor-tavern-logo-transparent.png",
-  "assets/tandoor-tavern-background.png",
+  "assets/tandoor-tavern-logo.jpeg",
+  "assets/tandoor-tavern-background-hq.jpg",
   "assets/paisley-corner-left.png",
   "assets/paisley-corner-right.png",
 ];
@@ -50,25 +50,18 @@ if (!html.includes("192 ELM PARK AVENUE")) {
 if (!html.includes("HORNCHURCH · RM12 4SD")) {
   fail("exact address line missing: HORNCHURCH · RM12 4SD");
 }
-if (!html.includes("assets/tandoor-tavern-logo-transparent.png")) {
-  fail("logo path must be assets/tandoor-tavern-logo-transparent.png");
+if (!html.includes("assets/tandoor-tavern-logo.jpeg")) {
+  fail("logo path must be assets/tandoor-tavern-logo.jpeg");
 }
-if (!html.includes("assets/tandoor-tavern-background.png")) {
-  fail("background path must be assets/tandoor-tavern-background.png");
+if (!html.includes("assets/tandoor-tavern-background-hq.jpg")) {
+  fail("background path must be assets/tandoor-tavern-background-hq.jpg");
 }
 
-const logoPath = join(publicDir, "assets/tandoor-tavern-logo-transparent.png");
+const logoPath = join(publicDir, "assets/tandoor-tavern-logo.jpeg");
 const logoHash = sha256(logoPath);
 console.log(`logo sha256: ${logoHash}`);
 console.log("build ok — output directory: public/");
 
-// Ensure _headers exists for caching of static assets (optional helper)
-const headersSrc = join(root, "public/_headers");
-if (!existsSync(headersSrc)) {
-  // no-op; headers file is committed separately
-}
-
-// Touch a build stamp for CI visibility (not required for Pages)
 const stampDir = join(root, ".build");
 mkdirSync(stampDir, { recursive: true });
 copyFileSync(join(publicDir, "index.html"), join(stampDir, "index.html.check"));
