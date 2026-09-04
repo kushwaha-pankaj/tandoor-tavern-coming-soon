@@ -1,0 +1,18 @@
+.verify/
+.build/
+node_modules/
+.DS_Store
+.wrangler/
+.dev.vars
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.cursor/
+
+# Draft/working copies outside the publish tree
+/assets/
+/css/
+/js/
+/index.html

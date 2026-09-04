@@ -1,0 +1,14 @@
+{
+  "name": "tandoor-tavern-coming-soon",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tandoor Tavern coming-soon website",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "lint": "node scripts/lint.mjs",
+    "check": "npm run lint && npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
